@@ -1,8 +1,8 @@
-import React from "react";
-
 function Formulario ({handleSubmit, handleChange, tarea})  {
 
- // const {handleSubmit, handleChange} = props;
+  
+
+ 
 
 
   return (
