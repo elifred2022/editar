@@ -7,13 +7,13 @@ function Lista ({nombre, comida, actualizarEditarTarea, eliminarTarea}) {
 
     function ModoEdicionActivado () {
         const [capturarCampoNombre, setCapturarCampoNombre] = useState(nombre.nombre);
-        const [capturarCampoComida, setCapturarCampoComida] = useState(nombre.comida);
+        //const [capturarCampoComida, setCapturarCampoComida] = useState(nombre.comida);
 
         const handleChange = (e) => {
             const text = e.target.value;
-            const text2 = e.target.comida;
+           // const text2 = e.target.comida;
             setCapturarCampoNombre(text);
-            setCapturarCampoComida(text2);
+           // setCapturarCampoComida(text2);
         }
 
         function handleClick(e) {
@@ -26,7 +26,7 @@ function Lista ({nombre, comida, actualizarEditarTarea, eliminarTarea}) {
                 { 
                 id: nombre.id,
                 nombre: capturarCampoNombre,
-                comida: capturarCampoComida,
+              //  comida: capturarCampoComida,
                 
                 },
                
@@ -42,11 +42,7 @@ function Lista ({nombre, comida, actualizarEditarTarea, eliminarTarea}) {
                         value={capturarCampoNombre}
                         onChange={handleChange}
                         />
-                        <input 
-                        type="text" 
-                        value={capturarCampoComida}
-                        onChange={handleChange}
-                        />
+                        
                         
                         <button className="btn-editar" onClick={handleClick}>Guardar</button>
                         <button className="btn-Eliminar" onClick={()=> eliminarTarea(nombre.id)}>Eliminar</button>

@@ -4,7 +4,6 @@ import Lista from "./components/Lista";
 
 function App() {
   const [nombre, setNombre] = useState("");
-  const [comida, setComida] = useState("");
   const [elementos, setElementos] = useState([]);
 
   useEffect(() => {
@@ -30,24 +29,21 @@ function App() {
     setElementos(temp);
 
     setNombre("");
-    setComida("");
 
     console.log(elementos);
   };
 
   const handleChange = (e) => {
     setNombre(e.target.value);
-    setComida(e.target.comida);
-    console.log(nombre, comida);
+    console.log(nombre);
   };
 
   function actualizarEditarTarea(objEditarTarea) {
-    const { id, nombre, comida } = objEditarTarea;
+    const { id, nombre } = objEditarTarea;
 
     const temp = [...elementos];
     const elemento = temp.find((item) => item.id === id);
     elemento.nombre = nombre;
-    elemento.comida = comida;
 
     setElementos(temp);
   }
@@ -64,7 +60,6 @@ function App() {
         <Formulario
           elementos={elementos}
           nombre={nombre}
-          comida={comida}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />
@@ -77,7 +72,6 @@ function App() {
               key={nombre.id}
               id={nombre.id}
               nombre={nombre}
-              comida={comida}
               elementos={elementos}
               actualizarEditarTarea={actualizarEditarTarea}
               eliminarTarea={eliminarTarea}
