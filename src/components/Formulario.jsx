@@ -1,4 +1,4 @@
-function Formulario ({handleSubmit, handleChange, tarea})  {
+function Formulario ({handleSubmit, handleChange, nombre, comida})  {
 
   
 
@@ -7,7 +7,8 @@ function Formulario ({handleSubmit, handleChange, tarea})  {
 
   return (
     <form action="">
-      <input value={tarea} onChange={handleChange} type="text" placeholder="ingrese tarea"/>
+      <input value={nombre} onChange={handleChange} type="text" placeholder="ingrese nombre"/>
+      <input value={comida} onChange={handleChange} type="text" placeholder="ingrese comida"/>
       <input onClick={handleSubmit} type="submit" className="btnagregar"  value="AGREGAR"/>
     </form>
   )

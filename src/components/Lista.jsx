@@ -1,28 +1,37 @@
 import React from "react";
 import { useState } from "react";
 
-function Lista ({tarea, actualizarEditarTarea, eliminarTarea}) {
+function Lista ({nombre, comida, actualizarEditarTarea, eliminarTarea}) {
     const [editando, setEditando] = useState(false);
    // const [estaCompletado, setEstaCompletado] = useState(false);
 
     function ModoEdicionActivado () {
-        const [capturarCampo, setCapturarCampo] = useState(tarea.tarea);
+        const [capturarCampoNombre, setCapturarCampoNombre] = useState(nombre.nombre);
+        const [capturarCampoComida, setCapturarCampoComida] = useState(nombre.comida);
 
         const handleChange = (e) => {
             const text = e.target.value;
-            setCapturarCampo(text);
+            const text2 = e.target.comida;
+            setCapturarCampoNombre(text);
+            setCapturarCampoComida(text2);
         }
 
         function handleClick(e) {
             e.preventDefault()
 
-            actualizarEditarTarea({ // funcion para editar desde el input original. esta funcion esta ubicada en app.js
-                id: tarea.id,
-                tarea: capturarCampo,
-                completado: false
 
+            // funcion para editar desde el input original. esta funcion esta ubicada en app.js
+            actualizarEditarTarea(
                 
-            })
+                { 
+                id: nombre.id,
+                nombre: capturarCampoNombre,
+                comida: capturarCampoComida,
+                
+                },
+               
+            
+            )
             setEditando(false)
         }       
             
@@ -30,12 +39,17 @@ function Lista ({tarea, actualizarEditarTarea, eliminarTarea}) {
                     <>
                         <input 
                         type="text" 
-                        value={capturarCampo}
+                        value={capturarCampoNombre}
+                        onChange={handleChange}
+                        />
+                        <input 
+                        type="text" 
+                        value={capturarCampoComida}
                         onChange={handleChange}
                         />
                         
                         <button className="btn-editar" onClick={handleClick}>Guardar</button>
-                        <button className="btn-Eliminar" onClick={()=> eliminarTarea(tarea.id)}>Eliminar</button>
+                        <button className="btn-Eliminar" onClick={()=> eliminarTarea(nombre.id)}>Eliminar</button>
                         
                     </>
                 );
@@ -46,16 +60,16 @@ function Lista ({tarea, actualizarEditarTarea, eliminarTarea}) {
         return (
             <>
                 <span 
-                >{tarea.tarea}</span>
+                >{nombre.nombre}</span>
                 <button className="btn btneditar" onClick={()=>setEditando(true)}>Editar</button>
-                <button className="btn eliminar" onClick={()=> eliminarTarea(tarea.id)}>Eliminar</button>
+                <button className="btn eliminar" onClick={()=> eliminarTarea(nombre.id)}>Eliminar</button>
             </>
         );
     }
 
     return (
         <>
-        <div className="contenedor-tarea" id={tarea.id}>
+        <div className="contenedor-tarea" id={nombre.id}>
             {
                 editando ? 
                     <ModoEdicionActivado />
@@ -71,13 +85,3 @@ function Lista ({tarea, actualizarEditarTarea, eliminarTarea}) {
 } 
 
 export default Lista;
-
-
-/* SI ALGUNA VEZ NO ME DA FIACA COPIAR EL STYLE DEL TIPO PARA QUE FUNCIONE EL SUBRAYADO ESTO VA CON EL ESTADO ESTACOMPLETADO Y VA EN EL SPAN
-
-<span 
-                className={estaCompletado ? "todoTerea soanSubrayado" : "todoTareaNoSubrayado"}
-                onClick={setEstaCompletado(!estaCompletado)}
-                >{tarea.tarea}</span>
-
-                */

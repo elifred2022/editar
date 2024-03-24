@@ -1,51 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Formulario from "./components/Formulario";
 import Lista from "./components/Lista";
 
 function App() {
-  const [tarea, setTarea] = useState("");
-  const [listadoTareas, setListadoTareas] = useState([]);
+  const [nombre, setNombre] = useState("");
+  const [comida, setComida] = useState("");
+  const [elementos, setElementos] = useState([]);
+
+  useEffect(() => {
+    // Almacena los elementos d comida en localStorage cada vez que cambien
+    localStorage.setItem("elementos", JSON.stringify(elementos));
+  }, [elementos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (tarea === "") {
+    if (nombre === "") {
       alert("debe ingresar tarea");
       return;
     }
 
     const nuevaTarea = {
       id: Date.now(),
-      tarea: tarea,
+      nombre: nombre,
       completado: false,
     };
 
-    const temp = [nuevaTarea, ...listadoTareas];
-    setListadoTareas(temp);
+    const temp = [nuevaTarea, ...elementos];
+    setElementos(temp);
 
-    setTarea("");
+    setNombre("");
+    setComida("");
 
-    console.log(listadoTareas);
+    console.log(elementos);
   };
 
   const handleChange = (e) => {
-    setTarea(e.target.value);
-    console.log(tarea);
+    setNombre(e.target.value);
+    setComida(e.target.comida);
+    console.log(nombre, comida);
   };
 
   function actualizarEditarTarea(objEditarTarea) {
-    const { id, tarea } = objEditarTarea;
+    const { id, nombre, comida } = objEditarTarea;
 
-    const temp = [...listadoTareas];
+    const temp = [...elementos];
     const elemento = temp.find((item) => item.id === id);
-    elemento.tarea = tarea;
+    elemento.nombre = nombre;
+    elemento.comida = comida;
 
-    setListadoTareas(temp);
+    setElementos(temp);
   }
 
   function eliminarTarea(id) {
-    const temp = listadoTareas.filter((item) => item.id !== id);
-    setListadoTareas(temp);
+    const temp = elementos.filter((item) => item.id !== id);
+    setElementos(temp);
   }
 
   return (
@@ -53,7 +62,9 @@ function App() {
       <h1>TO DO with edit buttom</h1>
       <div className="contenedor-formulario">
         <Formulario
-          tarea={tarea}
+          elementos={elementos}
+          nombre={nombre}
+          comida={comida}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />
@@ -61,12 +72,13 @@ function App() {
       <div className="contenedor-tareas">
         <h2>Listado de tareas</h2>
         <div className="contenedor-litatareas">
-          {listadoTareas.map((tarea) => (
+          {elementos.map((nombre) => (
             <Lista
-              key={tarea.id}
-              id={tarea.id}
-              tarea={tarea}
-              listadoTareas={listadoTareas}
+              key={nombre.id}
+              id={nombre.id}
+              nombre={nombre}
+              comida={comida}
+              elementos={elementos}
               actualizarEditarTarea={actualizarEditarTarea}
               eliminarTarea={eliminarTarea}
             />
@@ -78,5 +90,3 @@ function App() {
 }
 
 export default App;
-
-//https://www.youtube.com/watch?v=KK1zikMuYjk&list=WL&index=3&t=13s
